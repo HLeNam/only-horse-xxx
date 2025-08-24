@@ -1,0 +1,21 @@
+{
+    // disable folder compact mode
+    "explorer.compactFolders": false,
+    "files.associations": {
+        "*.css": "tailwindcss",
+        "*.scss": "tailwindcss",
+        "*.less": "tailwindcss"
+    },
+    "tailwindCSS.classAttributes": ["class", "className", "headerClassName"],
+    "tailwindCSS.experimental.classRegex": ["[a-zA-Z]*class[a-zA-Z]*='([^']+)'"],
+    "colorize.languages": [
+        "javascript",
+        "typescript",
+        "javascriptreact",
+        "typescriptreact"
+        // ...
+    ],
+    // text wrapping
+    "editor.wordWrap": "on",
+    "cSpell.words": ["kinde", "onlyhorse"]
+}
