@@ -1,4 +1,4 @@
-import AuthButtons from "@/app/components/home/auth-page/AuthButtons";
+import AuthButtons from "@/components/home/auth-page/AuthButtons";
 import Image from "next/image";
 
 const HeroSection = () => {
