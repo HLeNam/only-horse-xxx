@@ -1,12 +1,7 @@
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs/components";
+import BaseLayout from "@/components/BaseLayout";
 
 const HomePage = () => {
-    return (
-        <div>
-            HomePage
-            <LogoutLink>Logout</LogoutLink>
-        </div>
-    );
+    return <BaseLayout>HomePage</BaseLayout>;
 };
 
 export default HomePage;
