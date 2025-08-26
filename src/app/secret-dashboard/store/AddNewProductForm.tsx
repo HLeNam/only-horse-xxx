@@ -1,5 +1,6 @@
 "use client";
 
+import { addNewProductToStoreAction } from "@/app/secret-dashboard/actions";
 import RotatedText from "@/components/decorators/RotatedText";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,14 +13,41 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CldUploadWidget, CloudinaryUploadWidgetInfo } from "next-cloudinary";
 import Image from "next/image";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const AddNewProductForm = () => {
     const [name, setName] = useState("");
     const [price, setPrice] = useState("");
     const [imageUrl, setImageUrl] = useState("");
+
+    const queryClient = useQueryClient();
+    const { mutate: createProduct, isPending } = useMutation({
+        mutationKey: ["createProduct"],
+        mutationFn: async () => await addNewProductToStoreAction({ name, price, image: imageUrl }),
+        onSuccess: () => {
+            setName("");
+            setPrice("");
+            setImageUrl("");
+            toast.success("Product added", {
+                description: "Your product has been added successfully.",
+            });
+            queryClient.invalidateQueries({ queryKey: ["getAllProducts"] });
+        },
+        onError: (error) => {
+            toast.error("Error", {
+                description: error.message,
+            });
+        },
+    });
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        createProduct();
+    };
 
     return (
         <>
@@ -27,7 +55,7 @@ const AddNewProductForm = () => {
                 Add <RotatedText>New</RotatedText> Product
             </p>
 
-            <form>
+            <form onSubmit={handleSubmit}>
                 <Card className="w-full max-w-md mx-auto">
                     <CardHeader>
                         <CardTitle className="text-2xl">New Merch</CardTitle>
@@ -95,8 +123,8 @@ const AddNewProductForm = () => {
                     </CardContent>
 
                     <CardFooter>
-                        <Button className="w-full !text-white" type="submit">
-                            Add Product
+                        <Button className="w-full !text-white" type="submit" disabled={isPending}>
+                            {isPending ? "Adding..." : "Add Product"}
                         </Button>
                     </CardFooter>
                 </Card>

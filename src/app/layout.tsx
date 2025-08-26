@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/providers/ThemeProvider";
 import Footer from "@/components/Footer";
 import TanStackProvider from "@/providers/TanStackProvider";
 import KindeAuthProvider from "@/providers/KindeAuthProvider";
+import { Toaster } from "sonner";
 
 const inter = Inter({
     variable: "--font-inter",
@@ -41,6 +42,7 @@ export default function RootLayout({
                         <Footer />
                     </div>
                 </ThemeProvider>
+                <Toaster richColors />
             </body>
         </html>
     );

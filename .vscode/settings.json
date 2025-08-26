@@ -28,7 +28,9 @@
         "Merch",
         "onlyhorse",
         "rgba",
-        "tshirts"
+        "sonner",
+        "tshirts",
+        "unarchived"
     ],
     "[prisma]": {
         "editor.defaultFormatter": "Prisma.prisma"

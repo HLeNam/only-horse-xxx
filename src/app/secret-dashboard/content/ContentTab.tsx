@@ -1,5 +1,6 @@
 "use client";
 
+import { createPostAction } from "@/app/secret-dashboard/actions";
 import UnderlinedText from "@/components/decorators/UnderlinedText";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
@@ -15,10 +16,12 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Textarea } from "@/components/ui/textarea";
+import { useMutation } from "@tanstack/react-query";
 import { TriangleAlert } from "lucide-react";
 import { CldUploadWidget, CldVideoPlayer, CloudinaryUploadWidgetInfo } from "next-cloudinary";
 import Image from "next/image";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const ContentTab = () => {
     const [text, setText] = useState("");
@@ -26,13 +29,37 @@ const ContentTab = () => {
     const [isPublic, setIsPublic] = useState(false);
     const [mediaUrl, setMediaUrl] = useState("");
 
+    const { mutate: createPost, isPending } = useMutation({
+        mutationKey: ["createPost"],
+        mutationFn: async () => createPostAction({ text, mediaType, mediaUrl, isPublic }),
+        onSuccess: () => {
+            toast.success("Post created", {
+                description: "Your post has been created successfully.",
+            });
+            setText("");
+            setMediaUrl("");
+            setMediaType("video");
+            setIsPublic(false);
+        },
+        onError: (error) => {
+            toast.error("Error", {
+                description: (error as Error).message || "Something went wrong.",
+            });
+        },
+    });
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        createPost();
+    };
+
     return (
         <>
             <p className="text-3xl my-5 font-bold text-center uppercase">
                 <UnderlinedText className="decoration-wavy">Share</UnderlinedText> Post
             </p>
 
-            <form>
+            <form onSubmit={handleSubmit}>
                 <Card className="w-full max-w-md mx-auto">
                     <CardHeader>
                         <CardTitle className="text-2xl">New Posts</CardTitle>
@@ -79,6 +106,7 @@ const ContentTab = () => {
                                 //     "🚀 ~ (result.info as CloudinaryUploadWidgetInfo).secure_url:",
                                 //     (result.info as CloudinaryUploadWidgetInfo).secure_url
                                 // );
+                                // clear data of cloudinary widget
                                 widget.close();
                             }}
                         >
@@ -142,8 +170,8 @@ const ContentTab = () => {
                     </CardContent>
 
                     <CardFooter>
-                        <Button className="w-full !text-white" type="submit">
-                            Create Post
+                        <Button className="w-full !text-white" type="submit" disabled={isPending}>
+                            {isPending ? "Creating Post..." : "Create Post"}
                         </Button>
                     </CardFooter>
                 </Card>
