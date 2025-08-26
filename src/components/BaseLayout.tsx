@@ -1,4 +1,5 @@
 import Sidebar from "@/components/Sidebar";
+import SuggestedProducts from "@/components/SuggestedProducts";
 import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { redirect } from "next/navigation";
 
@@ -18,7 +19,7 @@ const BaseLayout = async ({ children, renderRightPanel = true }: BaseLayoutProps
         <div className="flex max-w-2xl lg:max-w-7xl mx-auto relative">
             <Sidebar />
             <div className="w-full lg:w-3/5 flex flex-col border-r">{children}</div>
-            {renderRightPanel && <p>Suggested Products</p>}
+            {renderRightPanel && <SuggestedProducts />}
         </div>
     );
 };

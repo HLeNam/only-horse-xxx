@@ -8,6 +8,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { user } from "@/dummy_data";
 import { Home, LayoutDashboard, Shirt, User } from "lucide-react";
 import Link from "next/link";
 
@@ -31,8 +32,8 @@ const Sidebar = () => {
         <div className="flex lg:w-1/5 flex-col gap-3 px-2 border-r sticky left-0 top-0 h-screen">
             <Link href={`/update-profile`} className="max-w-fit">
                 <Avatar className="mt-4 cursor-pointer">
-                    <AvatarImage src={`/user-placeholder.png`} alt="User Avatar" />
-                    <AvatarFallback>U</AvatarFallback>
+                    <AvatarImage src={user.image || `/user-placeholder.png`} alt="User Avatar" />
+                    <AvatarFallback>{user.name.charAt(0) || "U"}</AvatarFallback>
                 </Avatar>
             </Link>
 
