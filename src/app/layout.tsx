@@ -5,6 +5,8 @@ import "next-cloudinary/dist/cld-video-player.css";
 import "./globals.css";
 import { ThemeProvider } from "@/providers/ThemeProvider";
 import Footer from "@/components/Footer";
+import TanStackProvider from "@/providers/TanStackProvider";
+import KindeAuthProvider from "@/providers/KindeAuthProvider";
 
 const inter = Inter({
     variable: "--font-inter",
@@ -31,7 +33,11 @@ export default function RootLayout({
                     disableTransitionOnChange
                 >
                     <div className="h-screen flex flex-col">
-                        <div className="flex-1">{children}</div>
+                        <div className="flex-1">
+                            <KindeAuthProvider>
+                                <TanStackProvider>{children}</TanStackProvider>
+                            </KindeAuthProvider>
+                        </div>
                         <Footer />
                     </div>
                 </ThemeProvider>

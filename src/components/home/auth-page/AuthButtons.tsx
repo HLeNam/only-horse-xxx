@@ -14,7 +14,7 @@ const AuthButtons = () => {
                 </Button>
             </RegisterLink>
             <LoginLink className="flex-1">
-                <Button className="w-full text-base">Login</Button>
+                <Button className="w-full text-base !text-white">Login</Button>
             </LoginLink>
         </div>
     );

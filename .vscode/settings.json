@@ -19,7 +19,9 @@
     "editor.wordWrap": "on",
     "cSpell.words": [
         "Csvg",
+        "cuid",
         "gifs",
+        "googleusercontent",
         "jbei",
         "kinde",
         "magicui",
@@ -27,5 +29,8 @@
         "onlyhorse",
         "rgba",
         "tshirts"
-    ]
+    ],
+    "[prisma]": {
+        "editor.defaultFormatter": "Prisma.prisma"
+    }
 }

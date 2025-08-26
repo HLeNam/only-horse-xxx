@@ -1,3 +1,4 @@
+import LogoutButton from "@/components/LogoutButton";
 import { ModeToggle } from "@/components/ModeToggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
@@ -8,7 +9,7 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { user } from "@/dummy_data";
+import { getKindeServerSession } from "@kinde-oss/kinde-auth-nextjs/server";
 import { Home, LayoutDashboard, Shirt, User } from "lucide-react";
 import Link from "next/link";
 
@@ -25,15 +26,17 @@ const SIDEBAR_LINKS = [
     },
 ];
 
-const Sidebar = () => {
-    const isAdmin = true;
+const Sidebar = async () => {
+    const { getUser } = getKindeServerSession();
+    const user = await getUser();
+    const isAdmin = process.env.NEXT_PUBLIC_ADMIN_EMAIL === user?.email;
 
     return (
         <div className="flex lg:w-1/5 flex-col gap-3 px-2 border-r sticky left-0 top-0 h-screen">
             <Link href={`/update-profile`} className="max-w-fit">
                 <Avatar className="mt-4 cursor-pointer">
-                    <AvatarImage src={user.image || `/user-placeholder.png`} alt="User Avatar" />
-                    <AvatarFallback>{user.name.charAt(0) || "U"}</AvatarFallback>
+                    <AvatarImage src={user?.picture || `/user-placeholder.png`} alt="User Avatar" />
+                    <AvatarFallback>{user?.username?.charAt(0) || "U"}</AvatarFallback>
                 </Avatar>
             </Link>
 
@@ -75,9 +78,7 @@ const Sidebar = () => {
                         <Link href={`#`}>
                             <DropdownMenuItem>Billing</DropdownMenuItem>
                         </Link>
-                        <Link href={`#`}>
-                            <DropdownMenuItem>Logout</DropdownMenuItem>
-                        </Link>
+                        <LogoutButton />
                     </DropdownMenuContent>
                 </DropdownMenu>
 
