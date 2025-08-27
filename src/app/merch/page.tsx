@@ -1,10 +1,10 @@
-import { getAllProductsAction } from "@/app/secret-dashboard/actions";
+import { getAllPublicProductsAction } from "@/app/secret-dashboard/actions";
 import BaseLayout from "@/components/BaseLayout";
 import UnderlinedText from "@/components/decorators/UnderlinedText";
 import ProductCard from "@/components/ProductCard";
 
 const MerchPage = async () => {
-    const { DT: products } = await getAllProductsAction();
+    const { DT: products } = await getAllPublicProductsAction();
 
     return (
         <BaseLayout renderRightPanel={false}>

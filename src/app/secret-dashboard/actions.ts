@@ -55,6 +55,30 @@ export async function getAllProductsAction() {
     };
 }
 
+export async function getAllPublicProductsAction() {
+    const products = await prisma.product.findMany({
+        where: {
+            isArchived: false,
+        },
+    });
+
+    return {
+        EC: 0,
+        DT: products,
+    };
+}
+
+export async function getProductByIdAction(productId: string) {
+    const product = await prisma.product.findUnique({
+        where: { id: productId },
+    });
+
+    return {
+        EC: 0,
+        DT: product,
+    };
+}
+
 type NewProductArgs = {
     name: string;
     image: string;

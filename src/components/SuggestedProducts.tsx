@@ -1,7 +1,9 @@
+import { getAllProductsAction } from "@/app/secret-dashboard/actions";
 import SuggestedProduct from "@/components/SuggestedProduct";
-import { products } from "@/dummy_data";
 
-const SuggestedProducts = () => {
+const SuggestedProducts = async () => {
+    const products = await (await getAllProductsAction()).DT;
+
     return (
         <div className="lg:w-2/5 hidden lg:flex flex-col gap-3 px-2 sticky top-0 right-0 h-screen ml-3">
             <div className="flex flex-col gap-2 mt-10">

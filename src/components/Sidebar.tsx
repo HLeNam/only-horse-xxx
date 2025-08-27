@@ -1,3 +1,4 @@
+import { getUserProfileAction } from "@/app/update-profile/actions";
 import LogoutButton from "@/components/LogoutButton";
 import { ModeToggle } from "@/components/ModeToggle";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -29,13 +30,19 @@ const SIDEBAR_LINKS = [
 const Sidebar = async () => {
     const { getUser } = getKindeServerSession();
     const user = await getUser();
+
+    const userProfile = await getUserProfileAction();
+
     const isAdmin = process.env.NEXT_PUBLIC_ADMIN_EMAIL === user?.email;
 
     return (
         <div className="flex lg:w-1/5 flex-col gap-3 px-2 border-r sticky left-0 top-0 h-screen">
             <Link href={`/update-profile`} className="max-w-fit">
                 <Avatar className="mt-4 cursor-pointer">
-                    <AvatarImage src={user?.picture || `/user-placeholder.png`} alt="User Avatar" />
+                    <AvatarImage
+                        src={userProfile?.image || user?.picture || `/user-placeholder.png`}
+                        alt="User Avatar"
+                    />
                     <AvatarFallback>{user?.username?.charAt(0) || "U"}</AvatarFallback>
                 </Avatar>
             </Link>
